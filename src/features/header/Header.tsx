@@ -1,17 +1,21 @@
 import { Box, Button, Center, Container, Text } from "@chakra-ui/react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../registration/actions/auth-action";
+import { headerActiveLinkColor, headerLinkColor } from "../../constants";
 
 const Header = () => {
   const isLoggedIn = useSelector((state: any) => state.currentUser.isLoggedIn);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const logoutUser = () => {
     dispatch(logout() as any);
     navigate("/");
   };
+
   return (
     <Container maxW={"100%"} position={"fixed"} zIndex={2} top={0} p={4} mb={3}>
       <Center
@@ -23,7 +27,17 @@ const Header = () => {
         <Text>CompanySY</Text>
         {isLoggedIn ? (
           <>
-            <Text>Departments</Text>
+            <Link to={"/all-departments"}>
+              <Text
+                color={
+                  location.pathname === "/all-departments"
+                    ? headerActiveLinkColor
+                    : headerLinkColor
+                }
+              >
+                Departments
+              </Text>
+            </Link>
             <Text>My Department</Text>
             <Text>All Teams</Text>
             <Text>My Team</Text>
