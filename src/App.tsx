@@ -1,22 +1,37 @@
-import React from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { ROUTES } from "./routing/routes";
+import {
+  LOGGED_IN_DEFAULT_LAYOUT_ROUTES,
+  LOGGED_OUT_NO_LAYOUT_ROUTES,
+} from "./routing/routes";
 
 function App() {
+  const isLoggedIn = useSelector((state: any) => state.currentUser.isLoggedIn);
+
   return (
     <ChakraProvider>
       <Routes>
-        {ROUTES.map((route) => {
-          return (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={<route.element />}
-            />
-          );
-        })}
+        {isLoggedIn
+          ? LOGGED_IN_DEFAULT_LAYOUT_ROUTES.map((item) => {
+              return (
+                <Route
+                  key={item.path}
+                  path={item.path}
+                  element={<item.element />}
+                />
+              );
+            })
+          : LOGGED_OUT_NO_LAYOUT_ROUTES.map((item) => {
+              return (
+                <Route
+                  key={item.path}
+                  path={item.path}
+                  element={<item.element />}
+                />
+              );
+            })}
       </Routes>
     </ChakraProvider>
   );
