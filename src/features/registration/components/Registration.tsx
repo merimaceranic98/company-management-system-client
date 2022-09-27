@@ -21,7 +21,11 @@ const Registration = () => {
   const navigate = useNavigate();
 
   function onSubmit(data: any) {
-    dispatch(registerNewUser(data) as any);
+    const userData = {
+      ...data,
+      isAdmin: false,
+    };
+    dispatch(registerNewUser(userData) as any);
     navigate("/");
   }
 

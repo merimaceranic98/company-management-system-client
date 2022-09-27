@@ -1,10 +1,13 @@
 import AuthApi from "../../../api/auth/auth";
 import { updateCurrentUser } from "../../current-user/current-user-action";
+import { AUTH_ACTIONS } from "../constants/auth-constants";
 
 export const registerNewUser = (data: any) => {
-  return async (dispatch: any) => {
+  return async (dispatch: any, getState: any) => {
     try {
-      const response = await AuthApi.register(data);
+      dispatch(updateRegistrationData(data));
+      const state = getState();
+      const response = await AuthApi.register(state.auth);
       window.localStorage.setItem("token", response.data.accessToken);
       dispatch(updateCurrentUser(response));
     } catch (error) {
@@ -38,3 +41,8 @@ export const logout = () => {
     }
   };
 };
+
+export const updateRegistrationData = (data: any) => ({
+  type: AUTH_ACTIONS.HANDLE_REGISTER_NEW_USER,
+  data,
+});
