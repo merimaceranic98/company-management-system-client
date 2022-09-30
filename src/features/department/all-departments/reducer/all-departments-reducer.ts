@@ -7,6 +7,9 @@ const allDepartmentsInitialState = {
       name: null,
     },
   ],
+  department: {
+    users: [],
+  },
 };
 
 export const departments = (
@@ -18,6 +21,11 @@ export const departments = (
       return {
         ...state,
         departments: payload.data,
+      };
+    case ALL_DEPARTMENTS_ACTION.HANDLE_GET_DEPARTMENT_BY_ID:
+      return {
+        ...state,
+        department: payload.data,
       };
     default:
       return state;

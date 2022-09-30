@@ -25,6 +25,7 @@ const Header = () => {
         justifyContent={"space-between"}
       >
         <Text>CompanySY</Text>
+        <Text>Statistics</Text>
         {isLoggedIn ? (
           <>
             <Link to={"/all-departments"}>

@@ -7,6 +7,13 @@ class DepartmentsApi {
       url: "/departments",
     });
   };
+
+  static getDepartmentById = (id: number) => {
+    return axios({
+      method: "GET",
+      url: `/departments/${id}?_embed=users`,
+    });
+  };
 }
 
 export default DepartmentsApi;

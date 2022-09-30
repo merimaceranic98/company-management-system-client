@@ -6,7 +6,7 @@ const currentUserInitialState = {
     email: null,
     image: null,
     role: null,
-    department: null,
+    departmentId: 0,
     previousExperience: [],
     gender: null,
     isAdmin: false,
