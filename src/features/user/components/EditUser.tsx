@@ -12,20 +12,32 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserById } from "../actions/user-action";
+import Error from "../../error/component/Error";
+import { useEffect, useState } from "react";
 
 const EditUser = (props: any) => {
   const { isModalOpen, setIsModalOpen, userById } = props;
   const { handleSubmit, register } = useForm();
+  const isError = useSelector((state: any) => state.errors.error);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   function onSubmit(values: FieldValues) {
     dispatch(updateUserById(userById.id, values) as any);
     setIsModalOpen(false);
   }
+
+  useEffect(() => {
+    if (isError) {
+      setIsErrorModalOpen(true);
+    }
+  }, [isError]);
+
   const closeUserModal = () => {
     setIsModalOpen(false);
+    setIsErrorModalOpen(false);
   };
 
   return (
@@ -132,6 +144,15 @@ const EditUser = (props: any) => {
           </ModalBody>
         </ModalContent>
       </Modal>
+      {isError && (
+        <Error
+          isErrorModalOpen={isErrorModalOpen}
+          setIsErrorModalOpen={setIsErrorModalOpen}
+          setIsSubmitButtonClicked={() => {
+            return false;
+          }}
+        />
+      )}
     </>
   );
 };
