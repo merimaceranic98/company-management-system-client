@@ -17,11 +17,13 @@ type props = {
   size?: "sm" | "md" | "lg";
   columns: any;
   data: any;
+  marginTop: number;
+  mediumTableSize: string;
 };
 
 function Table(props: props) {
   const tableHeadBackgroundColor = useColorModeValue("white", "gray.800");
-  const { size = "sm", columns, data } = props;
+  const { size = "sm", columns, data, marginTop, mediumTableSize } = props;
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -33,8 +35,8 @@ function Table(props: props) {
       <ChakraTable
         size={size}
         {...getTableProps()}
-        mt={20}
-        w={{ base: "100vw", md: "70vw" }}
+        mt={marginTop}
+        w={{ base: "100vw", md: mediumTableSize }}
         mb={8}
       >
         <Thead
@@ -53,9 +55,8 @@ function Table(props: props) {
               >
                 {map(
                   (column: any) => (
-                    <Th zIndex={2} p={5} key={column.getHeaderProps().key}>
+                    <Th zIndex={2} p={2} key={column.getHeaderProps().key}>
                       <Box
-                        mb={3}
                         display={"flex"}
                         flexDirection={"row"}
                         justifyContent={"center"}
