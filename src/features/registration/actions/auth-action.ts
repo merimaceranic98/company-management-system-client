@@ -12,7 +12,6 @@ export const registerNewUser = (data: any) => {
       window.localStorage.setItem("token", response.data.accessToken);
       dispatch(updateCurrentUser(response));
     } catch (error) {
-      console.log("Error is, ", error);
       dispatch(handleShowErrorMessage(true));
     }
   };
@@ -25,8 +24,7 @@ export const login = (data: any) => {
       window.localStorage.setItem("token", response.data.accessToken);
       dispatch(updateCurrentUser(response));
     } catch (error) {
-      //TO DO: Error handling will be implemented in future
-      console.log("Error is, ", error);
+      dispatch(handleShowErrorMessage(true));
     }
   };
 };
@@ -37,8 +35,7 @@ export const logout = () => {
       window.localStorage.removeItem("token");
       dispatch(updateCurrentUser({ info: null, isLoggedIn: false }));
     } catch (error) {
-      //TO DO: Error handling will be implemented in future
-      console.log("Error is, ", error);
+      dispatch(handleShowErrorMessage(true));
     }
   };
 };

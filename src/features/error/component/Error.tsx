@@ -12,15 +12,21 @@ import { useDispatch } from "react-redux";
 import { showErrorMessage } from "../action/error-action";
 
 const Error = (props: any) => {
-  const { isErrorModalOpen, setIsErrorModalOpen } = props;
+  const { isErrorModalOpen, setIsErrorModalOpen, setIsSubmitButtonClicked } =
+    props;
   const dispatch = useDispatch();
   const onClose = () => {
     setIsErrorModalOpen(false);
     dispatch(showErrorMessage(false) as any);
+    setIsSubmitButtonClicked(false);
   };
   return (
     <>
-      <Modal isOpen={isErrorModalOpen} onClose={setIsErrorModalOpen}>
+      <Modal
+        isOpen={isErrorModalOpen}
+        onClose={setIsErrorModalOpen}
+        blockScrollOnMount={false}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader color={"red.500"} fontWeight={"bold"}>

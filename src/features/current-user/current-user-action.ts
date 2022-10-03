@@ -1,13 +1,8 @@
 import { CURRENT_USER_ACTIONS } from "./current-user-constants";
 
 export const updateCurrentUser = (data: any) => {
-  return async (dispatch: any) => {
-    try {
-      dispatch(handleUpdateCurrentUserInfo(data.data));
-    } catch (error) {
-      //TO DO: Error handling will be implemented in future
-      console.log("Error is, ", error);
-    }
+  return (dispatch: any) => {
+    dispatch(handleUpdateCurrentUserInfo(data.data));
   };
 };
 

@@ -6,9 +6,12 @@ import {
   Button,
   Container,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import { login } from "../actions/auth-action";
+import Error from "../../error/component/Error";
 
 const Login = () => {
   const {
@@ -16,12 +19,24 @@ const Login = () => {
     register,
     formState: { isSubmitting },
   } = useForm();
+  const isError = useSelector((state: any) => state.errors.error);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [isSubmitButtonClicked, setIsSubmitButtonClicked] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (isError) {
+      setIsErrorModalOpen(true);
+    }
+    if (!isError && isSubmitButtonClicked) {
+      navigate("/");
+    }
+  }, [isError]);
+
   function onSubmit(data: any) {
     dispatch(login(data) as any);
-    navigate("/");
+    setIsSubmitButtonClicked(true);
   }
   return (
     <Container
@@ -65,6 +80,13 @@ const Login = () => {
           Login
         </Button>
       </form>
+      {isError && (
+        <Error
+          isErrorModalOpen={isErrorModalOpen}
+          setIsErrorModalOpen={setIsErrorModalOpen}
+          setIsSubmitButtonClicked={setIsSubmitButtonClicked}
+        />
+      )}
     </Container>
   );
 };

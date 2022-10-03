@@ -1,4 +1,5 @@
 import DepartmentsApi from "../../../../api/departments/departments";
+import { handleShowErrorMessage } from "../../../error/action/error-action";
 import { ALL_DEPARTMENTS_ACTION } from "../constants/all-departments-constants";
 
 export const getAllDepartments = () => {
@@ -7,8 +8,7 @@ export const getAllDepartments = () => {
       const response = await DepartmentsApi.getAllDepartments();
       dispatch(getDepartments(response.data));
     } catch (error) {
-      //TO DO: Error handling will be implemented in future
-      console.log("Error is, ", error);
+      dispatch(handleShowErrorMessage(true));
     }
   };
 };
@@ -19,8 +19,7 @@ export const getDepartmentById = (id: number) => {
       const response = await DepartmentsApi.getDepartmentById(id);
       dispatch(departmentById(response.data));
     } catch (error) {
-      //TO DO: Error handling will be implemented in future
-      console.log("Error is, ", error);
+      dispatch(handleShowErrorMessage(true));
     }
   };
 };

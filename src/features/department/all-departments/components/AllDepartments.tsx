@@ -20,6 +20,7 @@ import { Cell } from "react-table";
 import Table from "../../../table/components/Table";
 import { getUserById } from "../../../user/actions/user-action";
 import EditUser from "../../../user/components/EditUser";
+import Error from "../../../error/component/Error";
 
 import {
   getAllDepartments,
@@ -32,13 +33,21 @@ const AllDepartments = () => {
   );
   const department = useSelector((state: any) => state.departments.department);
   const userById = useSelector((state: any) => state.users.user);
+  const isError = useSelector((state: any) => state.errors.error);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     dispatch(getAllDepartments() as any);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      setIsErrorModalOpen(true);
+    }
+  }, [isError]);
 
   const viewEmpleyees = (props: any) => {
     dispatch(getDepartmentById(Number(props.value)) as any);
@@ -180,6 +189,15 @@ const AllDepartments = () => {
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
       />
+      {isError && (
+        <Error
+          isErrorModalOpen={isErrorModalOpen}
+          setIsErrorModalOpen={setIsErrorModalOpen}
+          setIsSubmitButtonClicked={() => {
+            return false;
+          }}
+        />
+      )}
     </Container>
   );
 };

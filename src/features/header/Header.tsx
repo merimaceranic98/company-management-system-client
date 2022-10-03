@@ -1,19 +1,31 @@
 import { Box, Button, Center, Container, Text } from "@chakra-ui/react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import { logout } from "../registration/actions/auth-action";
 import { headerActiveLinkColor, headerLinkColor } from "../../constants";
+import Error from "../error/component/Error";
 
 const Header = () => {
   const isLoggedIn = useSelector((state: any) => state.currentUser.isLoggedIn);
+  const isError = useSelector((state: any) => state.errors.error);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
+  useEffect(() => {
+    if (isError) {
+      setIsErrorModalOpen(true);
+    }
+  }, [isError]);
+
   const logoutUser = () => {
     dispatch(logout() as any);
-    navigate("/");
+    if (!isError) {
+      navigate("/");
+    }
   };
 
   return (
@@ -79,6 +91,15 @@ const Header = () => {
           </Box>
         )}
       </Center>
+      {isError && (
+        <Error
+          isErrorModalOpen={isErrorModalOpen}
+          setIsErrorModalOpen={setIsErrorModalOpen}
+          setIsSubmitButtonClicked={() => {
+            return false;
+          }}
+        />
+      )}
     </Container>
   );
 };

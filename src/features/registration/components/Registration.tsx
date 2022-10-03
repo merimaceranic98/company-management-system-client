@@ -23,7 +23,6 @@ const Registration = () => {
   const navigate = useNavigate();
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const isError = useSelector((state: any) => state.errors.error);
-  const isErrorMessage = useSelector((state: any) => state.errors);
 
   function onSubmit(data: any) {
     const userData = {
@@ -106,6 +105,9 @@ const Registration = () => {
         <Error
           isErrorModalOpen={isErrorModalOpen}
           setIsErrorModalOpen={setIsErrorModalOpen}
+          setIsSubmitButtonClicked={() => {
+            return false;
+          }}
         />
       )}
     </Container>
