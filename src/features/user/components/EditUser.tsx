@@ -12,12 +12,18 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { updateUserById } from "../actions/user-action";
 
 const EditUser = (props: any) => {
-  const { isModalOpen, setIsModalOpen } = props;
+  const { isModalOpen, setIsModalOpen, userById } = props;
   const { handleSubmit, register } = useForm();
+  const dispatch = useDispatch();
 
-  function onSubmit(values: FieldValues) {}
+  function onSubmit(values: FieldValues) {
+    dispatch(updateUserById(userById.id, values) as any);
+    setIsModalOpen(false);
+  }
   const closeUserModal = () => {
     setIsModalOpen(false);
   };
@@ -81,7 +87,7 @@ const EditUser = (props: any) => {
                   {...register("role", {
                     required: "This is required",
                     minLength: {
-                      value: 4,
+                      value: 2,
                       message: "Minimum length should be 4",
                     },
                   })}
@@ -98,10 +104,6 @@ const EditUser = (props: any) => {
                   placeholder="Years of employment"
                   {...register("yearsOfEmployement", {
                     required: "This is required",
-                    minLength: {
-                      value: 4,
-                      message: "Minimum length should be 4",
-                    },
                   })}
                   mb={1}
                   fontSize={"14px"}
