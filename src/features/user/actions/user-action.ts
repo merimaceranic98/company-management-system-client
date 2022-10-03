@@ -15,10 +15,9 @@ export const getUserById = (id: number) => {
 };
 
 export const updateUserById = (userId: number, userData: FieldValues) => {
-  return async (dispatch: any) => {
+  return async () => {
     try {
-      const response = await UsersApi.updateUserById(userId, userData);
-      dispatch(handleUpdateUserById(response.data));
+      await UsersApi.updateUserById(userId, userData);
     } catch (error) {
       //TO DO: Error handling will be implemented in future
       console.log("Error is, ", error);
