@@ -1,5 +1,6 @@
 import AuthApi from "../../../api/auth/auth";
 import { updateCurrentUser } from "../../current-user/current-user-action";
+import { handleShowErrorMessage } from "../../error/action/error-action";
 import { AUTH_ACTIONS } from "../constants/auth-constants";
 
 export const registerNewUser = (data: any) => {
@@ -11,8 +12,8 @@ export const registerNewUser = (data: any) => {
       window.localStorage.setItem("token", response.data.accessToken);
       dispatch(updateCurrentUser(response));
     } catch (error) {
-      //TO DO: Error handling will be implemented in future
       console.log("Error is, ", error);
+      dispatch(handleShowErrorMessage(true));
     }
   };
 };

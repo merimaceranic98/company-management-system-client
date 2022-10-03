@@ -6,10 +6,12 @@ import {
   Button,
   Container,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { registerNewUser } from "../actions/auth-action";
+import Error from "../../error/component/Error";
+import { useEffect, useState } from "react";
 
 const Registration = () => {
   const {
@@ -19,6 +21,9 @@ const Registration = () => {
   } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const isError = useSelector((state: any) => state.errors.error);
+  const isErrorMessage = useSelector((state: any) => state.errors);
 
   function onSubmit(data: any) {
     const userData = {
@@ -28,6 +33,12 @@ const Registration = () => {
     dispatch(registerNewUser(userData) as any);
     navigate("/");
   }
+
+  useEffect(() => {
+    if (isError) {
+      setIsErrorModalOpen(true);
+    }
+  }, [isError]);
 
   return (
     <Container
@@ -91,6 +102,12 @@ const Registration = () => {
           Register
         </Button>
       </form>
+      {isError && (
+        <Error
+          isErrorModalOpen={isErrorModalOpen}
+          setIsErrorModalOpen={setIsErrorModalOpen}
+        />
+      )}
     </Container>
   );
 };
