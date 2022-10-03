@@ -13,12 +13,13 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Cell } from "react-table";
 
 import Table from "../../../table/components/Table";
 import { getUserById } from "../../../user/actions/user-action";
+import EditUser from "../../../user/components/EditUser";
 
 import {
   getAllDepartments,
@@ -30,7 +31,8 @@ const AllDepartments = () => {
     (state: any) => state.departments.departments
   );
   const department = useSelector((state: any) => state.departments.department);
-  const userById = useSelector((state: any) => state);
+  const userById = useSelector((state: any) => state.users.user);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -45,6 +47,8 @@ const AllDepartments = () => {
 
   const editEmployee = (props: any) => {
     dispatch(getUserById(Number(props.value)) as any);
+    onClose();
+    setIsModalOpen(true);
   };
 
   const columns = React.useMemo(
@@ -157,7 +161,6 @@ const AllDepartments = () => {
                 mediumTableSize={"100vw"}
               />
             </ModalBody>
-
             <ModalFooter>
               <Button
                 backgroundColor={"red.500"}
@@ -172,6 +175,11 @@ const AllDepartments = () => {
           </ModalContent>
         </Modal>
       </>
+      <EditUser
+        userById={userById}
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+      />
     </Container>
   );
 };

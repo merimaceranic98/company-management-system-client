@@ -1,7 +1,7 @@
 import { USER_ACTIONS } from "../constants/constants";
 
 const userInitialState = {
-  users: {},
+  user: null,
 };
 
 export const users = (state = userInitialState, payload: any) => {
@@ -9,7 +9,7 @@ export const users = (state = userInitialState, payload: any) => {
     case USER_ACTIONS.HANDLE_GET_USET_BY_ID:
       return {
         ...state,
-        users: payload.data,
+        user: payload.data,
       };
     default:
       return state;

@@ -5,7 +5,6 @@ export const getUserById = (id: number) => {
   return async (dispatch: any) => {
     try {
       const response = await UsersApi.getUserById(id);
-      console.log("Reposne is, ", response.data);
       dispatch(handleGetUserById(response.data));
     } catch (error) {
       //TO DO: Error handling will be implemented in future
