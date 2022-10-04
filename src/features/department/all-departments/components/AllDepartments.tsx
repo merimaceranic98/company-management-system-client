@@ -39,21 +39,23 @@ const AllDepartments = () => {
   );
   const isError = useSelector((state: any) => state.errors.error);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     dispatch(getAllDepartments() as any);
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(
       getCurrentLoggedInUser(
         Number(window.localStorage.getItem("userId")?.toString())
       ) as any
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    setIsCurrentUserAdmin(currentLoggedInUser.isAdmin);
+  }, [currentLoggedInUser.isAdmin]);
 
   useEffect(() => {
     if (isError) {
@@ -119,6 +121,21 @@ const AllDepartments = () => {
         accessor: "email",
       },
       {
+        Header: "Gender",
+        accessor: "gender",
+        Cell: function idCell(props: Cell) {
+          return (
+            <Flex justifyContent={"center"}>
+              {props.value ? props.value : "Not assigned"}
+            </Flex>
+          );
+        },
+      },
+      {
+        Header: "Years of employement",
+        accessor: "yearsOfEmployement",
+      },
+      {
         Header: "Role",
         accessor: "role",
         Cell: function idCell(props: Cell) {
@@ -142,9 +159,11 @@ const AllDepartments = () => {
                 _hover={{ backgroundColor: "red.500" }}
                 _focus={{ backgroundColor: "red.500" }}
                 onClick={() => {
-                  editEmployee(props);
+                  dispatch(getUserById(Number(props.value)) as any);
+                  onClose();
+                  setIsModalOpen(true);
                 }}
-                disabled={!currentLoggedInUser.isAdmin}
+                disabled={!isCurrentUserAdmin}
               >
                 Edit employee
               </Button>
@@ -153,7 +172,7 @@ const AllDepartments = () => {
         },
       },
     ],
-    []
+    [editEmployee, isCurrentUserAdmin]
   );
   return (
     <Container maxW={"100%"} mt={"100px"}>
