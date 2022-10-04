@@ -1,7 +1,13 @@
 import { GENDER_ACTIONS } from "../constants/genders-constants";
 
 const gendersInitialStateInitialState = {
-  genders: [],
+  genders: [
+    {
+      id: 0,
+      numberOfMale: 0,
+      numberOfFemale: 0,
+    },
+  ],
 };
 
 export const genders = (
@@ -14,6 +20,7 @@ export const genders = (
         ...state,
         genders: payload.data,
       };
+
     default:
       return state;
   }

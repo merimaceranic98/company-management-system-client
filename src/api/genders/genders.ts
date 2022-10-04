@@ -7,6 +7,14 @@ class GendersApi {
       url: "/genders",
     });
   };
+
+  static updateGenders = (data: any) => {
+    return axios({
+      method: "PATCH",
+      url: "/genders/1",
+      data,
+    });
+  };
 }
 
 export default GendersApi;

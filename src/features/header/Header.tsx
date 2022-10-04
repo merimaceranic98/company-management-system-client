@@ -36,7 +36,17 @@ const Header = () => {
         m={"0 auto"}
         justifyContent={"space-between"}
       >
-        <Text>CompanySY</Text>
+        <Link to={"/"}>
+          <Text
+            color={
+              location.pathname === "/"
+                ? headerActiveLinkColor
+                : headerLinkColor
+            }
+          >
+            CompanySY
+          </Text>
+        </Link>
         {isLoggedIn ? (
           <>
             <Link to={"/statistics"}>

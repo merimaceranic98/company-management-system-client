@@ -5,6 +5,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  Select,
   Button,
   FormLabel,
   FormControl,
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserById } from "../actions/user-action";
 import Error from "../../error/component/Error";
 import { useEffect, useState } from "react";
+import { getNumberPerDifferentGender } from "../../genders/actions/genders-actions";
 
 const EditUser = (props: any) => {
   const { isModalOpen, setIsModalOpen, userById } = props;
@@ -24,8 +26,13 @@ const EditUser = (props: any) => {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const dispatch = useDispatch();
 
+  const genders = useSelector((state: any) => state.genders.genders);
+  useEffect(() => {
+    dispatch(getNumberPerDifferentGender() as any);
+  }, [dispatch]);
+
   function onSubmit(values: FieldValues) {
-    dispatch(updateUserById(userById.id, values) as any);
+    dispatch(updateUserById(userById.id, values, genders) as any);
     setIsModalOpen(false);
   }
 
@@ -120,6 +127,20 @@ const EditUser = (props: any) => {
                   mb={1}
                   fontSize={"14px"}
                 />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="gender" fontSize={"14px"}>
+                  Gender
+                </FormLabel>
+                <Select
+                  {...register("gender", {
+                    required: "This is required",
+                  })}
+                  placeholder="Choose gender"
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female"> Female</option>
+                </Select>
               </FormControl>
               <Flex justifyContent={"space-between"} mt={4} mb={4}>
                 <Button
