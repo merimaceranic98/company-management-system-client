@@ -26,6 +26,7 @@ import {
   getAllDepartments,
   getDepartmentById,
 } from "../actions/all-departments-action";
+import { getCurrentLoggedInUser } from "../../../current-user/current-user-action";
 
 const AllDepartments = () => {
   const departments = useSelector(
@@ -33,6 +34,9 @@ const AllDepartments = () => {
   );
   const department = useSelector((state: any) => state.departments.department);
   const userById = useSelector((state: any) => state.users.user);
+  const currentLoggedInUser = useSelector(
+    (state: any) => state.currentUser.info
+  );
   const isError = useSelector((state: any) => state.errors.error);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
@@ -41,6 +45,14 @@ const AllDepartments = () => {
 
   useEffect(() => {
     dispatch(getAllDepartments() as any);
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      getCurrentLoggedInUser(
+        Number(window.localStorage.getItem("userId")?.toString())
+      ) as any
+    );
   }, [dispatch]);
 
   useEffect(() => {
@@ -132,6 +144,7 @@ const AllDepartments = () => {
                 onClick={() => {
                   editEmployee(props);
                 }}
+                disabled={!currentLoggedInUser.isAdmin}
               >
                 Edit employee
               </Button>

@@ -25,6 +25,11 @@ export const currentUser = (state = currentUserInitialState, payload: any) => {
         info: payload.data?.user,
         isLoggedIn: payload.data?.accessToken ? true : false,
       };
+    case CURRENT_USER_ACTIONS.HANDLE_GET_CURRENT_USER_INFO:
+      return {
+        ...state,
+        info: payload.data,
+      };
     default:
       return state;
   }
