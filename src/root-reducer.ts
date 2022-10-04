@@ -5,6 +5,7 @@ import { auth } from "./features/registration/reducers/auth.reducer";
 import { departments } from "./features/department/all-departments/reducer/all-departments-reducer";
 import { users } from "./features/user/reducer/user-reducer";
 import { errors } from "./features/error/reducer/error-reducer";
+import { genders } from "./features/genders/reducer/genders-reducer";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     departments,
     users,
     errors,
+    genders,
   },
 });
 export default store;
