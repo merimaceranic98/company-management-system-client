@@ -71,7 +71,17 @@ const Header = () => {
                 Departments
               </Text>
             </Link>
-            <Text>My Department</Text>
+            <Link to={"/my-department"}>
+              <Text
+                color={
+                  location.pathname === "/my-department"
+                    ? headerActiveLinkColor
+                    : headerLinkColor
+                }
+              >
+                My Department
+              </Text>
+            </Link>
             <Text>All Teams</Text>
             <Text>My Team</Text>
             <Text>My Profile</Text>

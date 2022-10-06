@@ -3,6 +3,7 @@ import Home from "../features/home/components/Home";
 import Login from "../features/registration/components/Login";
 import Registration from "../features/registration/components/Registration";
 import GendersStatisticsPieChart from "../features/genders/components/GendersStatisticsPieChart";
+import MyDepartment from "../features/department/my-department/components/MyDepartment";
 
 const LOGGED_IN_DEFAULT_LAYOUT_ROUTES = [
   {
@@ -16,6 +17,10 @@ const LOGGED_IN_DEFAULT_LAYOUT_ROUTES = [
   {
     path: "/statistics",
     element: GendersStatisticsPieChart,
+  },
+  {
+    path: "/my-department",
+    element: MyDepartment,
   },
 ];
 
