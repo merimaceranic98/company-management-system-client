@@ -148,6 +148,7 @@ const EditUser = (props: any) => {
                   _hover={{ backgroundColor: "red.500" }}
                   _focus={{ backgroundColor: "red.500" }}
                   type="submit"
+                  color={"white"}
                   size={"sm"}
                 >
                   Submit

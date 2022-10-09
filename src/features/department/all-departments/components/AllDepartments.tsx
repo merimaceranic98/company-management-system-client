@@ -90,6 +90,7 @@ const AllDepartments = () => {
                 mb={1}
                 size="xs"
                 backgroundColor={"red.500"}
+                color={"white"}
                 _hover={{ backgroundColor: "red.500" }}
                 _focus={{ backgroundColor: "red.500" }}
                 onClick={() => {
@@ -156,6 +157,7 @@ const AllDepartments = () => {
                 mb={1}
                 size="xs"
                 backgroundColor={"red.500"}
+                color={"white"}
                 _hover={{ backgroundColor: "red.500" }}
                 _focus={{ backgroundColor: "red.500" }}
                 onClick={() => {
@@ -208,6 +210,7 @@ const AllDepartments = () => {
                 _hover={{ backgroundColor: "red.500" }}
                 _focus={{ backgroundColor: "red.500" }}
                 onClick={onClose}
+                color={"white"}
                 size={"sm"}
               >
                 Close

@@ -87,6 +87,7 @@ const Header = () => {
             <Text>My Profile</Text>
             <Button
               backgroundColor={"red.500"}
+              color={"white"}
               _hover={{ backgroundColor: "red.500" }}
               _focus={{ backgroundColor: "red.500" }}
               size={"sm"}

@@ -48,7 +48,7 @@ const GendersStatisticsPieChart = () => {
           {
             title: "Female",
             value: genders[0]?.numberOfFemale ? genders[0]?.numberOfFemale : 0,
-            color: "#fff",
+            color: "#000",
           },
         ]}
       />

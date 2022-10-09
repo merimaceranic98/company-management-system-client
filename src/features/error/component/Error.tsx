@@ -42,6 +42,7 @@ const Error = (props: any) => {
               _focus={{ backgroundColor: "red.500" }}
               size={"sm"}
               mr={3}
+              color={"white"}
               onClick={() => onClose()}
             >
               Close
