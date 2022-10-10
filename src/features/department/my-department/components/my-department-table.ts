@@ -5,7 +5,6 @@ import {
   TableRow,
   WidthType,
   BorderStyle,
-  ShadingType,
   TableOfContents,
   convertInchesToTwip,
 } from "docx";
@@ -14,7 +13,6 @@ import paragraph from "./paragraph";
 
 const textColor = "#6E7A89";
 
-// This function creates table rows. Separated from the table itself for readability
 const reportTableFields = {
   email: "Email",
   role: "Role",
@@ -37,212 +35,94 @@ type ReportTableModel = {
 
 const reportTableRows = (tableData: Partial<ReportTableModel>): TableRow[] => {
   const rows: TableRow[] = [];
-  // For each key defined above (maybe move this to constants), check if it exists and put it in the table
-  // This is to avoid having to put placeholder values in a table if the corresponding key is not present
   let index = 0;
   Object.keys(reportTableFields).forEach((field: any) => {
     if (tableData[field as keyof typeof tableData]) {
       let newRow;
-      if (index === 0) {
-        // Create new table row with specified width
-        // If index is 0 (we just started creating the table), we add colored leftmost column,
-        // which is just one cell that spans all the rows
-        newRow = new TableRow({
-          children: [
-            new TableCell({
-              width: {
-                size: 150,
-                type: WidthType.DXA,
+      newRow = new TableRow({
+        children: [
+          new TableCell({
+            width: {
+              size: 3505,
+              type: WidthType.DXA,
+            },
+            margins: {
+              top: convertInchesToTwip(0.1),
+              bottom: convertInchesToTwip(0.1),
+              left: convertInchesToTwip(0.1),
+              right: convertInchesToTwip(0.1),
+            },
+            children: [
+              paragraph(
+                reportTableFields[field as keyof typeof reportTableFields],
+                { color: textColor }
+              ),
+            ],
+            borders: {
+              top: {
+                style: BorderStyle.SINGLE,
+                color: "#CBD5E0",
+                size: 0,
               },
-              // dynamically determine the number of rows for rowspan
-              rowSpan: Object.keys(tableData).length,
-              shading: {
-                type: ShadingType.CLEAR,
+              bottom: {
+                style: BorderStyle.SINGLE,
+                color: "#CBD5E0",
+                size: 0,
               },
-              children: [],
-              borders: {
-                top: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                bottom: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                left: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                right: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
+              left: {
+                style: BorderStyle.SINGLE,
+                color: "#CBD5E0",
+                size: 0,
               },
-            }),
-            new TableCell({
-              width: {
-                size: 3505,
-                type: WidthType.DXA,
+              right: {
+                style: BorderStyle.SINGLE,
+                size: 20,
+                color: "#ffffff",
               },
-              margins: {
-                top: convertInchesToTwip(0.1),
-                bottom: convertInchesToTwip(0.1),
-                left: convertInchesToTwip(0.1),
-                right: convertInchesToTwip(0.1),
-              },
-              children: [
-                paragraph(
-                  reportTableFields[field as keyof typeof reportTableFields],
-                  { color: textColor }
-                ),
-              ],
-              borders: {
-                top: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                bottom: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                left: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                right: {
-                  style: BorderStyle.NONE,
-                  size: 1,
-                  color: "ffffff",
-                },
-              },
-            }),
-            new TableCell({
-              width: {
-                size: 5505,
-                type: WidthType.DXA,
-              },
-              margins: {
-                top: convertInchesToTwip(0.1),
-                bottom: convertInchesToTwip(0.1),
-                left: convertInchesToTwip(0.1),
-                right: convertInchesToTwip(0.1),
-              },
-              children: [
-                paragraph(
-                  tableData[field as keyof typeof tableData] as string,
-                  { color: textColor }
-                ),
-              ],
-              borders: {
-                top: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                bottom: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                left: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                right: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-              },
-            }),
-          ],
-        });
-      } else {
-        // This is a 'regular' row without colored cell
-        newRow = new TableRow({
-          children: [
-            new TableCell({
-              width: {
-                size: 3505,
-                type: WidthType.DXA,
-              },
-              margins: {
-                top: convertInchesToTwip(0.1),
-                bottom: convertInchesToTwip(0.1),
-                left: convertInchesToTwip(0.1),
-                right: convertInchesToTwip(0.1),
-              },
-              shading: {
-                fill: index % 2 === 0 ? "#ffffff" : "#f8f9fA",
-                type: ShadingType.CLEAR,
-              },
-              children: [
-                paragraph(
-                  reportTableFields[field as keyof typeof reportTableFields],
-                  { color: textColor }
-                ),
-              ],
-              borders: {
-                top: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                bottom: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                left: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                right: {
-                  style: BorderStyle.SINGLE,
-                  size: 20,
-                  color: "#ffffff",
-                },
-              },
-            }),
-            new TableCell({
-              width: {
-                size: 5505,
-                type: WidthType.DXA,
-              },
-              margins: {
-                top: convertInchesToTwip(0.1),
-                bottom: convertInchesToTwip(0.1),
-                left: convertInchesToTwip(0.1),
-                right: convertInchesToTwip(0.1),
-              },
+            },
+          }),
+          new TableCell({
+            width: {
+              size: 5505,
+              type: WidthType.DXA,
+            },
+            margins: {
+              top: convertInchesToTwip(0.1),
+              bottom: convertInchesToTwip(0.1),
+              left: convertInchesToTwip(0.1),
+              right: convertInchesToTwip(0.1),
+            },
 
-              children: [
-                paragraph(
-                  tableData[field as keyof typeof tableData] as string,
-                  { color: textColor }
-                ),
-              ],
-              shading: {
-                fill: index % 2 === 0 ? "#ffffff" : "#f8f9fA",
-                type: ShadingType.CLEAR,
+            children: [
+              paragraph(tableData[field as keyof typeof tableData] as string, {
+                color: textColor,
+              }),
+            ],
+            borders: {
+              top: {
+                style: BorderStyle.SINGLE,
+                color: "#CBD5E0",
+                size: 0,
               },
-              borders: {
-                top: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                bottom: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                left: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
-                right: {
-                  style: BorderStyle.NONE,
-                  size: 0,
-                },
+              bottom: {
+                style: BorderStyle.SINGLE,
+                color: "#CBD5E0",
+                size: 0,
               },
-            }),
-          ],
-        });
-      }
+              left: {
+                style: BorderStyle.SINGLE,
+                color: "#CBD5E0",
+                size: 20,
+              },
+              right: {
+                style: BorderStyle.SINGLE,
+                color: "#CBD5E0",
+                size: 20,
+              },
+            },
+          }),
+        ],
+      });
       rows.push(newRow);
       index++;
     }
@@ -250,7 +130,6 @@ const reportTableRows = (tableData: Partial<ReportTableModel>): TableRow[] => {
   return rows;
 };
 
-// Creates the table with rows added with the function above
 const reportTable = (
   tableData: Partial<ReportTableModel>
 ): (Paragraph | Table | TableOfContents)[] => {
@@ -258,27 +137,33 @@ const reportTable = (
     columnWidths: [200, 3505, 5505],
     borders: {
       top: {
-        style: BorderStyle.NONE,
+        style: BorderStyle.SINGLE,
+        color: "#CBD5E0",
         size: 0,
       },
       bottom: {
-        style: BorderStyle.NONE,
+        style: BorderStyle.SINGLE,
+        color: "#CBD5E0",
         size: 0,
       },
       left: {
-        style: BorderStyle.NONE,
+        style: BorderStyle.SINGLE,
+        color: "#CBD5E0",
         size: 0,
       },
       right: {
-        style: BorderStyle.NONE,
+        style: BorderStyle.SINGLE,
+        color: "#CBD5E0",
         size: 0,
       },
       insideHorizontal: {
-        style: BorderStyle.NONE,
+        style: BorderStyle.SINGLE,
+        color: "#CBD5E0",
         size: 0,
       },
       insideVertical: {
-        style: BorderStyle.NONE,
+        style: BorderStyle.SINGLE,
+        color: "#CBD5E0",
         size: 0,
       },
     },
