@@ -1,14 +1,19 @@
-import { Container, Center, Flex } from "@chakra-ui/react";
-import React from "react";
+import { Container, Center, Flex, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Cell } from "react-table";
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import saveAs from "file-saver";
+
 import { getCurrentLoggedInUser } from "../../../current-user/current-user-action";
 import Table from "../../../table/components/Table";
 import { getDepartmentById } from "../../all-departments/actions/all-departments-action";
+import reportTable from "./my-department-table";
 
 const MyDepartment = () => {
   const dispatch = useDispatch();
+  const [tempArray, setTempArray] = useState<any[]>([]);
 
   const currentLoggedInUser = useSelector(
     (state: any) => state.currentUser.info
@@ -71,6 +76,31 @@ const MyDepartment = () => {
     []
   );
 
+  const downloadMyDepartmentData = async () => {
+    const departmentData: any[] = [];
+    department?.users.forEach((item: any) => {
+      const res = reportTable(item);
+      res.forEach((tableItem) => {
+        departmentData.push(tableItem);
+      });
+      departmentData.push(new Paragraph(""));
+      departmentData.push(new Paragraph(""));
+      departmentData.push(new Paragraph(""));
+    });
+    setTempArray(departmentData);
+    const document = new Document({
+      sections: [
+        {
+          children: [new Paragraph(""), ...departmentData],
+        },
+      ],
+    });
+    await Packer.toBlob(document).then((blob) => {
+      // saveAs from FileSaver will download the file
+      saveAs(blob, `CompanySY testing.docx`);
+    });
+  };
+
   return (
     <Container maxW={"100%"} mt={"100px"}>
       <Center>
@@ -80,7 +110,19 @@ const MyDepartment = () => {
           marginTop={0}
           mediumTableSize={"70vw"}
         />
-      </Center>{" "}
+      </Center>
+      <Center>
+        <Button
+          backgroundColor={"red.500"}
+          _hover={{ backgroundColor: "red.500" }}
+          _focus={{ backgroundColor: "red.500" }}
+          color={"white"}
+          size={"xs"}
+          onClick={() => downloadMyDepartmentData()}
+        >
+          My department as .docx
+        </Button>
+      </Center>
     </Container>
   );
 };
