@@ -13,7 +13,6 @@ import reportTable from "./my-department-table";
 
 const MyDepartment = () => {
   const dispatch = useDispatch();
-  const [tempArray, setTempArray] = useState<any[]>([]);
 
   const currentLoggedInUser = useSelector(
     (state: any) => state.currentUser.info
@@ -87,7 +86,6 @@ const MyDepartment = () => {
       departmentData.push(new Paragraph(""));
       departmentData.push(new Paragraph(""));
     });
-    setTempArray(departmentData);
     const document = new Document({
       sections: [
         {
@@ -95,7 +93,7 @@ const MyDepartment = () => {
             new Paragraph({
               children: [
                 new TextRun({
-                  text: `ALL USERS PER DEPARTMENT: ${department.name}`,
+                  text: `Users per department - ${department.name}`,
                   color: "#E53E3E",
                   font: "Arial",
                   bold: true,
