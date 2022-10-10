@@ -6,6 +6,7 @@ import GendersStatisticsPieChart from "../features/genders/components/GendersSta
 import MyDepartment from "../features/department/my-department/components/MyDepartment";
 import Teams from "../features/team/components/Teams";
 import MyTeam from "../features/team/components/MyTeam";
+import UserProfile from "../features/current-user/components/UserProfile";
 
 const LOGGED_IN_DEFAULT_LAYOUT_ROUTES = [
   {
@@ -31,6 +32,10 @@ const LOGGED_IN_DEFAULT_LAYOUT_ROUTES = [
   {
     path: "/my-team",
     element: MyTeam,
+  },
+  {
+    path: "/my-profile",
+    element: UserProfile,
   },
 ];
 
