@@ -18,6 +18,7 @@ import { updateUserById } from "../actions/user-action";
 import Error from "../../error/component/Error";
 import { useEffect, useState } from "react";
 import { getNumberPerDifferentGender } from "../../genders/actions/genders-actions";
+import UserImageUploader from "./UserImageUploader";
 
 const EditUser = (props: any) => {
   const { isModalOpen, setIsModalOpen, userById } = props;
@@ -25,6 +26,7 @@ const EditUser = (props: any) => {
   const isError = useSelector((state: any) => state.errors.error);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const [userImage, setUserImage] = useState(null);
 
   const genders = useSelector((state: any) => state.genders.genders);
   useEffect(() => {
@@ -32,7 +34,15 @@ const EditUser = (props: any) => {
   }, [dispatch]);
 
   function onSubmit(values: FieldValues) {
-    dispatch(updateUserById(userById.id, values, genders) as any);
+    const data = {
+      firstName: values.firstName,
+      gender: values.gender,
+      lastName: values.lastName,
+      role: values.role,
+      yearsOfEmployement: values.yearsOfEmployement,
+      image: userImage,
+    };
+    dispatch(updateUserById(userById.id, data, genders) as any);
     setIsModalOpen(false);
   }
 
@@ -45,6 +55,17 @@ const EditUser = (props: any) => {
   const closeUserModal = () => {
     setIsModalOpen(false);
     setIsErrorModalOpen(false);
+  };
+
+  const handleOnDrop = (files: File[]) => {
+    const file = files[0];
+    let fileReader = null as any;
+    fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+      const { result } = e.target;
+      setUserImage(result);
+    };
+    fileReader.readAsDataURL(file);
   };
 
   return (
@@ -133,6 +154,7 @@ const EditUser = (props: any) => {
                   Gender
                 </FormLabel>
                 <Select
+                  mb={1}
                   {...register("gender", {
                     required: "This is required",
                   })}
@@ -141,6 +163,12 @@ const EditUser = (props: any) => {
                   <option value="Male">Male</option>
                   <option value="Female"> Female</option>
                 </Select>
+              </FormControl>
+              <FormControl>
+                <FormLabel fontSize={"14px"}>User image</FormLabel>
+                <UserImageUploader
+                  onDrop={(event: any) => handleOnDrop(event)}
+                />
               </FormControl>
               <Flex justifyContent={"space-between"} mt={4} mb={4}>
                 <Button
