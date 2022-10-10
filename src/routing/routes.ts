@@ -5,6 +5,7 @@ import Registration from "../features/registration/components/Registration";
 import GendersStatisticsPieChart from "../features/genders/components/GendersStatisticsPieChart";
 import MyDepartment from "../features/department/my-department/components/MyDepartment";
 import Teams from "../features/team/components/Teams";
+import MyTeam from "../features/team/components/MyTeam";
 
 const LOGGED_IN_DEFAULT_LAYOUT_ROUTES = [
   {
@@ -26,6 +27,10 @@ const LOGGED_IN_DEFAULT_LAYOUT_ROUTES = [
   {
     path: "/all-teams",
     element: Teams,
+  },
+  {
+    path: "/my-team",
+    element: MyTeam,
   },
 ];
 
