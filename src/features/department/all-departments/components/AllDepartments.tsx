@@ -27,6 +27,7 @@ import {
   getDepartmentById,
 } from "../actions/all-departments-action";
 import { getCurrentLoggedInUser } from "../../../current-user/current-user-action";
+import UserDetails from "../../../user/components/UserDetails";
 
 const AllDepartments = () => {
   const departments = useSelector(
@@ -39,6 +40,7 @@ const AllDepartments = () => {
   );
   const isError = useSelector((state: any) => state.errors.error);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserDetailsModalOpen, setIsUserDetailsModalOpen] = useState(false);
   const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -110,19 +112,19 @@ const AllDepartments = () => {
   const columnsUsersPerDepartment = React.useMemo(
     () => [
       {
-        Header: "First name",
+        Header: "FIRST NAME",
         accessor: "firstName",
       },
       {
-        Header: "Last name",
+        Header: "LAST NAME",
         accessor: "lastName",
       },
       {
-        Header: "Email",
+        Header: "EMAIL",
         accessor: "email",
       },
       {
-        Header: "Gender",
+        Header: "GENDER",
         accessor: "gender",
         Cell: function idCell(props: Cell) {
           return (
@@ -137,7 +139,7 @@ const AllDepartments = () => {
         accessor: "yearsOfEmployement",
       },
       {
-        Header: "Role",
+        Header: "ROLE",
         accessor: "role",
         Cell: function idCell(props: Cell) {
           return (
@@ -148,7 +150,7 @@ const AllDepartments = () => {
         },
       },
       {
-        Header: "Edit",
+        Header: "ACTIONS",
         accessor: "id",
         Cell: function idCell(props: Cell) {
           return (
@@ -166,8 +168,24 @@ const AllDepartments = () => {
                   setIsModalOpen(true);
                 }}
                 disabled={!isCurrentUserAdmin}
+                marginRight={"1rem"}
               >
                 Edit employee
+              </Button>
+              <Button
+                mb={1}
+                size="xs"
+                backgroundColor={"red.500"}
+                color={"white"}
+                _hover={{ backgroundColor: "red.500" }}
+                _focus={{ backgroundColor: "red.500" }}
+                onClick={() => {
+                  dispatch(getUserById(Number(props.value)) as any);
+                  setIsUserDetailsModalOpen(true);
+                }}
+                disabled={!isCurrentUserAdmin}
+              >
+                User details
               </Button>
             </Flex>
           );
@@ -223,6 +241,11 @@ const AllDepartments = () => {
         userById={userById}
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
+      />
+      <UserDetails
+        userById={userById}
+        setIsUserDetailsModalOpen={setIsUserDetailsModalOpen}
+        isUserDetailsModalOpen={isUserDetailsModalOpen}
       />
       {isError && (
         <Error
