@@ -154,7 +154,6 @@ const UserDetails = (props: any) => {
     });
 
     await Packer.toBlob(document).then((blob) => {
-      // saveAs from FileSaver will download the file
       saveAs(
         blob,
         `CompanySY ${userById?.firstName} ${userById?.lastName}.docx`
@@ -277,6 +276,7 @@ const UserDetails = (props: any) => {
                 color={"red.500"}
                 fontWeight={"bold"}
                 fontSize={"14px"}
+                mb={"1rem"}
               >
                 IMAGE
               </Text>

@@ -21,7 +21,6 @@ import Table from "../../../table/components/Table";
 import { getUserById } from "../../../user/actions/user-action";
 import EditUser from "../../../user/components/EditUser";
 import Error from "../../../error/component/Error";
-
 import {
   getAllDepartments,
   getDepartmentById,

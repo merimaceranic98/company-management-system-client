@@ -6,6 +6,7 @@ import { departments } from "./features/department/all-departments/reducer/all-d
 import { users } from "./features/user/reducer/user-reducer";
 import { errors } from "./features/error/reducer/error-reducer";
 import { genders } from "./features/genders/reducer/genders-reducer";
+import { teams } from "./features/team/reducer/team-reducer";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     users,
     errors,
     genders,
+    teams,
   },
 });
 export default store;
