@@ -9,6 +9,7 @@ import {
   ModalHeader,
   Text,
   ModalOverlay,
+  Img,
 } from "@chakra-ui/react";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import saveAs from "file-saver";
@@ -266,9 +267,22 @@ const UserDetails = (props: any) => {
               >
                 GENDER
               </Text>
-              <Text fontSize={"14px"}>{userById?.gender.toLowerCase()}</Text>
+              <Text fontSize={"14px"}>{userById?.gender?.toLowerCase()}</Text>
             </Box>
           </Flex>
+          {userById?.image && (
+            <Flex flexDirection={"column"}>
+              <Text
+                mr={"4px"}
+                color={"red.500"}
+                fontWeight={"bold"}
+                fontSize={"14px"}
+              >
+                IMAGE
+              </Text>
+              <Img height={"100px"} width={"100px"} src={userById?.image} />
+            </Flex>
+          )}
           <Flex justifyContent={"flex-end"}>
             <Button
               size="xs"
