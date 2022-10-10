@@ -1,6 +1,5 @@
 import { AlignmentType, Paragraph, TextRun } from "docx";
 
-// Custom paragraph with some default options already set
 const paragraph = (
   text: string,
   options?: {

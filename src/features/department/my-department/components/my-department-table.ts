@@ -13,7 +13,7 @@ import paragraph from "./paragraph";
 
 const textColor = "#6E7A89";
 
-const reportTableFields = {
+const usersTableFields = {
   email: "Email",
   role: "Role",
   gender: "Gender",
@@ -22,7 +22,7 @@ const reportTableFields = {
   lastName: "Last name",
 };
 
-type ReportTableModel = {
+type UsersDepartmentModel = {
   name: string;
   host: string;
   riskLevel: string;
@@ -33,10 +33,11 @@ type ReportTableModel = {
   classification?: string;
 };
 
-const reportTableRows = (tableData: Partial<ReportTableModel>): TableRow[] => {
+const reportTableRows = (
+  tableData: Partial<UsersDepartmentModel>
+): TableRow[] => {
   const rows: TableRow[] = [];
-  let index = 0;
-  Object.keys(reportTableFields).forEach((field: any) => {
+  Object.keys(usersTableFields).forEach((field: any) => {
     if (tableData[field as keyof typeof tableData]) {
       let newRow;
       newRow = new TableRow({
@@ -54,7 +55,7 @@ const reportTableRows = (tableData: Partial<ReportTableModel>): TableRow[] => {
             },
             children: [
               paragraph(
-                reportTableFields[field as keyof typeof reportTableFields],
+                usersTableFields[field as keyof typeof usersTableFields],
                 { color: textColor }
               ),
             ],
@@ -92,7 +93,6 @@ const reportTableRows = (tableData: Partial<ReportTableModel>): TableRow[] => {
               left: convertInchesToTwip(0.1),
               right: convertInchesToTwip(0.1),
             },
-
             children: [
               paragraph(tableData[field as keyof typeof tableData] as string, {
                 color: textColor,
@@ -124,14 +124,13 @@ const reportTableRows = (tableData: Partial<ReportTableModel>): TableRow[] => {
         ],
       });
       rows.push(newRow);
-      index++;
     }
   });
   return rows;
 };
 
 const reportTable = (
-  tableData: Partial<ReportTableModel>
+  tableData: Partial<UsersDepartmentModel>
 ): (Paragraph | Table | TableOfContents)[] => {
   const table = new Table({
     columnWidths: [200, 3505, 5505],
@@ -169,7 +168,6 @@ const reportTable = (
     },
     rows: [...reportTableRows(tableData)],
   });
-  // This is how spacing must be done, by creating empty paragraphs
   return [paragraph(tableData.name as string, { bold: true }), table];
 };
 
