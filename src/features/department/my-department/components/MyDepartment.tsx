@@ -91,7 +91,20 @@ const MyDepartment = () => {
     const document = new Document({
       sections: [
         {
-          children: [new Paragraph(""), ...departmentData],
+          children: [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `ALL USERS PER DEPARTMENT: ${department.name}`,
+                  color: "#E53E3E",
+                  font: "Arial",
+                  bold: true,
+                }),
+              ],
+            }),
+            new Paragraph({ text: "" }),
+            ...departmentData,
+          ],
         },
       ],
     });
