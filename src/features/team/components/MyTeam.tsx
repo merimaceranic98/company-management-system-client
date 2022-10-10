@@ -27,8 +27,10 @@ const MyTeam = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getTeamById(currentLoggedInUser.teamId) as any);
-  }, [dispatch]);
+    if (currentLoggedInUser?.teamId) {
+      dispatch(getTeamById(currentLoggedInUser?.teamId) as any);
+    }
+  }, [dispatch, currentLoggedInUser]);
 
   const columnsUserPerTeams = React.useMemo(
     () => [
@@ -109,28 +111,33 @@ const MyTeam = () => {
       saveAs(blob, `CompanySY ${team?.name}.docx`);
     });
   };
+
   return (
     <Container maxW={"100%"} mt={"100px"}>
-      <Center>
-        <Table
-          data={team?.users}
-          columns={columnsUserPerTeams}
-          marginTop={0}
-          mediumTableSize={"70vw"}
-        />
-      </Center>
-      <Center>
-        <Button
-          backgroundColor={"red.500"}
-          _hover={{ backgroundColor: "red.500" }}
-          _focus={{ backgroundColor: "red.500" }}
-          color={"white"}
-          size={"xs"}
-          onClick={() => downloadMyTeamData()}
-        >
-          My team as .docx
-        </Button>
-      </Center>
+      {team && (
+        <>
+          <Center>
+            <Table
+              data={team?.users}
+              columns={columnsUserPerTeams}
+              marginTop={0}
+              mediumTableSize={"70vw"}
+            />
+          </Center>
+          <Center>
+            <Button
+              backgroundColor={"red.500"}
+              _hover={{ backgroundColor: "red.500" }}
+              _focus={{ backgroundColor: "red.500" }}
+              color={"white"}
+              size={"xs"}
+              onClick={() => downloadMyTeamData()}
+            >
+              My team as .docx
+            </Button>
+          </Center>
+        </>
+      )}
     </Container>
   );
 };

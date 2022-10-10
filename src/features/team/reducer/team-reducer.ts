@@ -2,7 +2,7 @@ import { TEAM_ACTIONS } from "../constants/team-constants";
 
 const teamsInitialState = {
   teams: [],
-  team: {},
+  team: null,
 };
 
 export const teams = (state = teamsInitialState, payload: any) => {
