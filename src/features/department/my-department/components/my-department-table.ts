@@ -23,14 +23,12 @@ const usersTableFields = {
 };
 
 type UsersDepartmentModel = {
-  name: string;
-  host: string;
-  riskLevel: string;
-  confidence: string;
-  issueBackground: string;
-  remediationBackground: string;
-  vulnerabilityClassifications: string;
-  classification?: string;
+  email: string;
+  role: string;
+  gender: string;
+  yearsOfEmployement: number;
+  firstName: string;
+  lastName: string;
 };
 
 const reportTableRows = (
@@ -168,7 +166,12 @@ const reportTable = (
     },
     rows: [...reportTableRows(tableData)],
   });
-  return [paragraph(tableData.name as string, { bold: true }), table];
+  return [
+    paragraph(`${tableData.firstName} ${tableData.lastName}` as string, {
+      bold: true,
+    }),
+    table,
+  ];
 };
 
 export default reportTable;
