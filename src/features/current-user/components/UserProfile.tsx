@@ -1,6 +1,9 @@
 import { Box, Container, Flex, Img, Text, Divider } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { useMediaQuery } from "@react-hookz/web";
 
 import { getCurrentLoggedInUser } from "../current-user-action";
 
@@ -9,6 +12,9 @@ const UserProfile = () => {
   const currentLoggedInUser = useSelector(
     (state: any) => state.currentUser.info
   );
+  console.log("current user is, ", currentLoggedInUser);
+  const isLargeDevice = useMediaQuery("only screen and (min-width: 80em)");
+  const boxProps = isLargeDevice ? { whileHover: { scale: 1.1 } } : {};
 
   useEffect(() => {
     dispatch(
@@ -20,12 +26,13 @@ const UserProfile = () => {
 
   return (
     <Container mt={"100px"} w={"80%"} pl={0} pr={0}>
-      <Flex gap={"16px"}>
+      <Flex gap={"32px"}>
         <Flex
           w={"50%"}
           borderRadius={"48px"}
           flexDirection={"column"}
-          border={"2px solid #EDF2F7"}
+          border={"1px solid #CBD5E0"}
+          backgroundColor={"#F7FAFC"}
         >
           <Box p={"40px"} pb={"20px"}>
             <Img borderRadius={"50%"} src={currentLoggedInUser.image} />
@@ -41,40 +48,98 @@ const UserProfile = () => {
           <Divider />
           <Box pl={"20px"} pt={2} pb={"40px"}>
             <Box p={2} display={"flex"}>
-              <Text fontWeight={"medium"} fontSize={"16px"} mr={"3px"}>
+              <Text
+                fontWeight={"bold"}
+                color={"red.500"}
+                fontSize={"16px"}
+                mr={"3px"}
+              >
                 First name:
               </Text>
               <Text>{currentLoggedInUser.firstName}</Text>
             </Box>
             <Box p={2} display={"flex"}>
-              <Text fontWeight={"medium"} fontSize={"16px"} mr={"3px"}>
+              <Text
+                fontWeight={"bold"}
+                color={"red.500"}
+                fontSize={"16px"}
+                mr={"3px"}
+              >
                 Last name:
               </Text>
               <Text>{currentLoggedInUser.lastName}</Text>
             </Box>
             <Box p={2} display={"flex"}>
-              <Text fontWeight={"medium"} fontSize={"16px"} mr={"3px"}>
+              <Text
+                fontWeight={"bold"}
+                color={"red.500"}
+                fontSize={"16px"}
+                mr={"3px"}
+              >
                 Role:
               </Text>
               <Text>{currentLoggedInUser.role}</Text>
             </Box>
             <Box p={2} display={"flex"}>
-              <Text fontWeight={"medium"} fontSize={"16px"} mr={"3px"}>
+              <Text
+                fontWeight={"bold"}
+                color={"red.500"}
+                fontSize={"16px"}
+                mr={"3px"}
+              >
                 Years of employement:
               </Text>
               <Text>{currentLoggedInUser.yearsOfEmployement}</Text>
             </Box>
             <Box p={2} display={"flex"}>
-              <Text fontWeight={"medium"} fontSize={"16px"} mr={"3px"}>
+              <Text
+                fontWeight={"bold"}
+                color={"red.500"}
+                fontSize={"16px"}
+                mr={"3px"}
+              >
                 Email:
               </Text>
               <Text>{currentLoggedInUser.email}</Text>
             </Box>
           </Box>
         </Flex>
-        <Flex w={"50%"} backgroundColor={"green"} flexDirection={"column"}>
-          <Box>My department</Box>
-          <Box>My team</Box>
+        <Flex
+          w={"50%"}
+          // backgroundColor={"green"}
+          gap={"32px"}
+          flexDirection={"column"}
+        >
+          <Box
+            backgroundColor={"#F7FAFC"}
+            border={"1px solid #CBD5E0"}
+            p={"20px"}
+            borderRadius={"16px"}
+            as={motion.div}
+            {...boxProps}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Text>
+              {`Your department is ${currentLoggedInUser.department.name}`}
+            </Text>
+            <Text>
+              <Link to={"/my-department"}>Visit the department!</Link>
+            </Text>
+          </Box>
+          <Box
+            backgroundColor={"#F7FAFC"}
+            border={"1px solid #CBD5E0"}
+            p={"20px"}
+            borderRadius={"16px"}
+            as={motion.div}
+            {...boxProps}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Text>{`Your team is ${currentLoggedInUser.team.name}`}</Text>
+            <Text>
+              <Link to={"/my-team"}>Visit the team!</Link>
+            </Text>
+          </Box>
         </Flex>
       </Flex>
     </Container>

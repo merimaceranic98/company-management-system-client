@@ -5,7 +5,7 @@ class UsersApi {
   static getUserById = (id: number) => {
     return axios({
       method: "GET",
-      url: `/users/${id}`,
+      url: `/users/${id}?_expand=department&_expand=team`,
     });
   };
 
