@@ -42,6 +42,10 @@ const LOGGED_IN_DEFAULT_LAYOUT_ROUTES = [
 const LOGGED_OUT_NO_LAYOUT_ROUTES = [
   {
     path: "/",
+    element: Home,
+  },
+  {
+    path: "/register",
     element: Registration,
   },
   {

@@ -128,7 +128,7 @@ const Header = () => {
           </>
         ) : (
           <Box>
-            <Link to={"/"}>
+            <Link to={"/register"}>
               <Button
                 backgroundColor={"red.500"}
                 _hover={{ backgroundColor: "red.500" }}
