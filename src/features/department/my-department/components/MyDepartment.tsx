@@ -108,7 +108,7 @@ const MyDepartment = () => {
     });
     await Packer.toBlob(document).then((blob) => {
       // saveAs from FileSaver will download the file
-      saveAs(blob, `CompanySY testing.docx`);
+      saveAs(blob, `CompanySY ${department.name}.docx`);
     });
   };
 

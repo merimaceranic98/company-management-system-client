@@ -12,7 +12,6 @@ const UserProfile = () => {
   const currentLoggedInUser = useSelector(
     (state: any) => state.currentUser.info
   );
-  console.log("current user is, ", currentLoggedInUser);
   const isLargeDevice = useMediaQuery("only screen and (min-width: 80em)");
   const boxProps = isLargeDevice ? { whileHover: { scale: 1.1 } } : {};
 
@@ -104,12 +103,7 @@ const UserProfile = () => {
             </Box>
           </Box>
         </Flex>
-        <Flex
-          w={"50%"}
-          // backgroundColor={"green"}
-          gap={"32px"}
-          flexDirection={"column"}
-        >
+        <Flex w={"50%"} gap={"32px"} flexDirection={"column"}>
           <Box
             backgroundColor={"#F7FAFC"}
             border={"1px solid #CBD5E0"}
