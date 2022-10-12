@@ -29,7 +29,7 @@ const MyDepartment = () => {
 
   useEffect(() => {
     dispatch(getDepartmentById(currentLoggedInUser.departmentId) as any);
-  }, [dispatch]);
+  }, [dispatch, currentLoggedInUser]);
 
   const columnsUsersPerDepartment = React.useMemo(
     () => [
