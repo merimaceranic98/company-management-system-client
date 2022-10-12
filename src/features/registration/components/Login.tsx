@@ -75,6 +75,7 @@ const Login = () => {
           _focus={{ backgroundColor: "red.500" }}
           isLoading={isSubmitting}
           type="submit"
+          color={"white"}
           w={"100%"}
         >
           Login

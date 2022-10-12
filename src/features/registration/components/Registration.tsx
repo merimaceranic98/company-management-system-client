@@ -96,6 +96,7 @@ const Registration = () => {
           _focus={{ backgroundColor: "red.500" }}
           isLoading={isSubmitting}
           type="submit"
+          color={"white"}
           w={"100%"}
         >
           Register

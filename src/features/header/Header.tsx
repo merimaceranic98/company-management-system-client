@@ -134,6 +134,7 @@ const Header = () => {
                 _hover={{ backgroundColor: "red.500" }}
                 _focus={{ backgroundColor: "red.500" }}
                 size={"sm"}
+                color={"white"}
                 mr={2}
               >
                 Register
@@ -145,6 +146,7 @@ const Header = () => {
                 _hover={{ backgroundColor: "red.500" }}
                 _focus={{ backgroundColor: "red.500" }}
                 size={"sm"}
+                color={"white"}
               >
                 Login
               </Button>
