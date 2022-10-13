@@ -2,6 +2,7 @@ import { USER_ACTIONS } from "../constants/constants";
 
 const userInitialState = {
   user: null,
+  usersWithoutTeam: [],
 };
 
 export const users = (state = userInitialState, payload: any) => {
@@ -10,6 +11,11 @@ export const users = (state = userInitialState, payload: any) => {
       return {
         ...state,
         user: payload.data,
+      };
+    case USER_ACTIONS.HANDLE_GET_USERS_WITHOUT_TEAM:
+      return {
+        ...state,
+        usersWithoutTeam: payload.data,
       };
     default:
       return state;

@@ -4,6 +4,7 @@ import {
   Center,
   Container,
   Flex,
+  FormControl,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,27 +12,45 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Cell } from "react-table";
 
 import Table from "../../table/components/Table";
+import {
+  getUsersWithoutTeam,
+  updateUserAssignTeam,
+} from "../../user/actions/user-action";
 import { getAllTeams, getTeamById } from "../actions/team-action";
 
 const Teams = () => {
   const dispatch = useDispatch();
+  const { handleSubmit, register } = useForm();
   const teams = useSelector((state: any) => state.teams.teams);
+  const [teamNumber, setTeamNumber] = useState(null);
   const team = useSelector((state: any) => state.teams.team);
+  const usersWithoutTeam = useSelector(
+    (state: any) => state.users.usersWithoutTeam
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     dispatch(getAllTeams() as any);
   }, []);
 
-  const getTeamDetails = (teamId: number) => {
-    dispatch(getTeamById(teamId) as any);
+  useEffect(() => {
+    if (teamNumber !== null) {
+      dispatch(getTeamById(Number(teamNumber)) as any);
+      dispatch(getUsersWithoutTeam() as any);
+    }
+  }, [teamNumber]);
+
+  const getTeamDetails = (teamId: any) => {
+    setTeamNumber(teamId);
   };
 
   const columns = React.useMemo(
@@ -110,12 +129,19 @@ const Teams = () => {
     ],
     []
   );
+
+  function onSubmit(values: FieldValues) {
+    const data = {
+      teamId: team.id,
+    };
+    dispatch(updateUserAssignTeam(values.id, data) as any);
+  }
   return (
     <Container maxW={"100%"} mt={"100px"}>
       <Center>
         <Box display={"flex"} p={4} m={"0 auto"} pl={"0px"} pr={"0px"}>
           <Table
-            data={teams}
+            data={teams.filter((x: any) => x.id !== 0)}
             columns={columns}
             marginTop={20}
             mediumTableSize={"70vw"}
@@ -129,14 +155,56 @@ const Teams = () => {
             <ModalHeader fontSize={"14px"}>Team details</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Table
-                data={team?.users}
-                columns={columnsUserPerTeams}
-                marginTop={0}
-                mediumTableSize={"100vw"}
-              />
+              {team && (
+                <Table
+                  data={team?.users}
+                  columns={columnsUserPerTeams}
+                  marginTop={0}
+                  mediumTableSize={"100vw"}
+                />
+              )}
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter
+              justifyContent={
+                usersWithoutTeam.length > 0 ? "space-between" : "flex-end"
+              }
+            >
+              {usersWithoutTeam.length > 0 && (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Flex alignItems={"center"}>
+                    <FormControl mr={2}>
+                      <Select
+                        height={"30px"}
+                        {...register("id", {
+                          required: "This is required",
+                        })}
+                        placeholder="Add team member"
+                      >
+                        {usersWithoutTeam.map((item: any) => {
+                          return (
+                            <option
+                              key={item.id}
+                              value={item.id}
+                            >{`${item.firstName} ${item.lastName}`}</option>
+                          );
+                        })}
+                      </Select>
+                    </FormControl>
+                    <Button
+                      type="submit"
+                      backgroundColor={"red.500"}
+                      _hover={{ backgroundColor: "red.500" }}
+                      _focus={{ backgroundColor: "red.500" }}
+                      color={"white"}
+                      size={"sm"}
+                      pl={10}
+                      pr={10}
+                    >
+                      Save changes
+                    </Button>
+                  </Flex>
+                </form>
+              )}
               <Button
                 backgroundColor={"red.500"}
                 _hover={{ backgroundColor: "red.500" }}

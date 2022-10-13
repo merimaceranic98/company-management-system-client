@@ -16,6 +16,13 @@ class UsersApi {
       data,
     });
   };
+
+  static usersWithoutTeam = () => {
+    return axios({
+      method: "GET",
+      url: `/users?teamId=0`,
+    });
+  };
 }
 
 export default UsersApi;
