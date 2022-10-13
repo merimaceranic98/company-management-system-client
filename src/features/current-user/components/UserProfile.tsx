@@ -1,6 +1,6 @@
 import { Box, Container, Flex, Img, Text, Divider } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "@react-hookz/web";
@@ -15,6 +15,9 @@ const UserProfile = () => {
   const isLargeDevice = useMediaQuery("only screen and (min-width: 80em)");
   const boxProps = isLargeDevice ? { whileHover: { scale: 1.1 } } : {};
 
+  const boxPropsLinks = isLargeDevice
+    ? { whileHover: { scale: 1.1, color: "#FC8181" } }
+    : {};
   useEffect(() => {
     dispatch(
       getCurrentLoggedInUser(
@@ -113,10 +116,16 @@ const UserProfile = () => {
             {...boxProps}
             whileTap={{ scale: 0.9 }}
           >
-            <Text>
+            <Text fontSize={"12px"} fontWeight={"bold"}>
               {`Your department is ${currentLoggedInUser.department.name}`}
             </Text>
-            <Text color={"red.500"} fontWeight={"bold"}>
+            <Text
+              as={motion.div}
+              {...boxPropsLinks}
+              whileTap={{ scale: 0.9 }}
+              color={"red.500"}
+              fontWeight={"bold"}
+            >
               <Link to={"/my-department"}>Visit the department!</Link>
             </Text>
           </Box>
@@ -129,8 +138,17 @@ const UserProfile = () => {
             {...boxProps}
             whileTap={{ scale: 0.9 }}
           >
-            <Text>{`Your team is ${currentLoggedInUser.team.name}`}</Text>
-            <Text color={"red.500"} fontWeight={"bold"}>
+            <Text
+              fontSize={"12px"}
+              fontWeight={"bold"}
+            >{`Your team is ${currentLoggedInUser.team.name}`}</Text>
+            <Text
+              as={motion.div}
+              {...boxPropsLinks}
+              whileTap={{ scale: 0.9 }}
+              color={"red.500"}
+              fontWeight={"bold"}
+            >
               <Link to={"/my-team"}>Visit the team!</Link>
             </Text>
           </Box>

@@ -38,11 +38,17 @@ const Header = () => {
       >
         <Link to={"/"}>
           <Text
+            backgroundColor={"gray.50"}
+            border={"1px solid #CBD5E0"}
+            p={1}
+            borderRadius={"8px"}
             color={
               location.pathname === "/"
                 ? headerActiveLinkColor
                 : headerLinkColor
             }
+            fontSize={"14px"}
+            fontWeight={"medium"}
           >
             CompanySY
           </Text>
@@ -51,50 +57,80 @@ const Header = () => {
           <>
             <Link to={"/statistics"}>
               <Text
+                backgroundColor={"gray.50"}
+                border={"1px solid #CBD5E0"}
+                p={1}
+                borderRadius={"8px"}
                 color={
                   location.pathname === "/statistics"
                     ? headerActiveLinkColor
                     : headerLinkColor
                 }
+                fontSize={"14px"}
+                fontWeight={"medium"}
               >
                 Statistics
               </Text>
             </Link>
             <Link to={"/all-departments"}>
               <Text
+                backgroundColor={"gray.50"}
+                border={"1px solid #CBD5E0"}
+                p={1}
+                borderRadius={"8px"}
                 color={
                   location.pathname === "/all-departments"
                     ? headerActiveLinkColor
                     : headerLinkColor
                 }
+                fontSize={"14px"}
+                fontWeight={"medium"}
               >
                 Departments
               </Text>
             </Link>
             <Link to={"/my-department"}>
               <Text
+                backgroundColor={"gray.50"}
+                border={"1px solid #CBD5E0"}
+                p={1}
+                borderRadius={"8px"}
                 color={
                   location.pathname === "/my-department"
                     ? headerActiveLinkColor
                     : headerLinkColor
                 }
+                fontSize={"14px"}
+                fontWeight={"medium"}
               >
                 My Department
               </Text>
             </Link>
             <Link to={"/all-teams"}>
               <Text
+                backgroundColor={"gray.50"}
+                border={"1px solid #CBD5E0"}
+                p={1}
+                borderRadius={"8px"}
                 color={
                   location.pathname === "/all-teams"
                     ? headerActiveLinkColor
                     : headerLinkColor
                 }
+                fontSize={"14px"}
+                fontWeight={"medium"}
               >
                 All Teams
               </Text>
             </Link>
             <Link to={"/my-team"}>
               <Text
+                fontSize={"14px"}
+                fontWeight={"medium"}
+                backgroundColor={"gray.50"}
+                border={"1px solid #CBD5E0"}
+                p={1}
+                borderRadius={"8px"}
                 color={
                   location.pathname === "/my-team"
                     ? headerActiveLinkColor
@@ -106,6 +142,12 @@ const Header = () => {
             </Link>
             <Link to={"/my-profile"}>
               <Text
+                backgroundColor={"gray.50"}
+                border={"1px solid #CBD5E0"}
+                p={1}
+                borderRadius={"8px"}
+                fontSize={"14px"}
+                fontWeight={"medium"}
                 color={
                   location.pathname === "/my-profile"
                     ? headerActiveLinkColor
